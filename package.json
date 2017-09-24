@@ -1,0 +1,27 @@
+{
+  "name": "straphQL-Lambda",
+  "version": "1.0.0",
+  "description": "GraphQL backend for Straph running on AWS Lambda",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blatadude/straphQL-Lambda.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blatadude/straphQL-Lambda/issues"
+  },
+  "homepage": "https://github.com/blatadude/straphQL-Lambda#readme",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.3"
+  }
+}
