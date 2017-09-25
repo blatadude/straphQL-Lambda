@@ -16,7 +16,7 @@ const Album = new GraphQLObjectType({
     description: 'Spotify Album',
     fields: () => ({
         id: {
-            type: GraphQLID
+            type: GraphQLString
         },
         artists: {
             type: [Artist],

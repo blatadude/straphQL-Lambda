@@ -12,9 +12,6 @@ const Features = new GraphQLObjectType({
     name: 'Song Features',
     description: 'EchoNest Analysis',
     fields: () => ({
-        id: {
-            type: GraphQLID
-        },
         danceability: {
             type: GraphQLInt
         },

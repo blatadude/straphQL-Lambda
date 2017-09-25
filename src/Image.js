@@ -12,9 +12,6 @@ const Image = new GraphQLObjectType({
     name: 'Image',
     description: 'Image',
     fields: () => ({
-        id: {
-            type: GraphQLID
-        },
         height: {
             type: GraphQLInt,
         },

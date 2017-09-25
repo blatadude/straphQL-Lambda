@@ -6,6 +6,7 @@ const Album = require('./Album');
 const Features = require('./Features');
 
 const {
+    GraphQLSchema,
 	GraphQLObjectType,
     GraphQLString,
     GraphQLList,
@@ -18,9 +19,6 @@ const Track = new GraphQL.GraphQLObjectType({
     description: 'spotify track for straph',
     fields: () => ({
         id: {
-         type: GraphQLID   
-        },
-        trackID: {
             type: GraphQLString,
             description: 'Spotify ID'
         },
@@ -57,4 +55,4 @@ const Track = new GraphQL.GraphQLObjectType({
         }
     })
 });
-module.exports = Track;
+module.exports = new GraphQLSc

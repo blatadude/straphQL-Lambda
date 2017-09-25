@@ -13,7 +13,7 @@ const Artist = new GraphQLObjectType({
     description: 'Track artitst',
     fields: () => ({
         id: {
-            type: GraphQLID
+            type: GraphQLString,
         },
         spotifyOpen: {
             type: GraphQLString,
