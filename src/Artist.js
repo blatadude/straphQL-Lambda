@@ -14,26 +14,22 @@ const Artist = new GraphQLObjectType({
     fields: () => ({
         id: {
             type: GraphQLString,
+            resolve: artist => artist.id
         },
         spotifyOpen: {
             type: GraphQLString,
-            description:'open.spotify.com link'
-        },
-        href: {
-            type: GraphQLString,
-            description: 'api reference to artist'
-        }, 
-        spotifyID: {
-            type: GraphQLString,
-            description: 'spotify ID'
+            description:'open.spotify.com link',
+            resolve: artist => artist.external_urls.spotify
         }, 
         name: {
             type: GraphQLString,
-            description: 'Artist name'
+            description: 'Artist name',
+            resolve: artist => artist.name
         }, 
         uri: {
             type: GraphQLString,
-            description: 'Spotify URI' 
+            description: 'Spotify URI',
+            resolve: artist => artist.uri 
         }
     })
 });

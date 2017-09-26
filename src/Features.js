@@ -9,7 +9,7 @@ const {
 } = GraphQL;
 
 const Features = new GraphQLObjectType({
-    name: 'Song Features',
+    name: 'Features',
     description: 'EchoNest Analysis',
     fields: () => ({
         danceability: {

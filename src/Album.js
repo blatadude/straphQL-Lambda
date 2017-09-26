@@ -16,27 +16,33 @@ const Album = new GraphQLObjectType({
     description: 'Spotify Album',
     fields: () => ({
         id: {
-            type: GraphQLString
+            type: GraphQLString,
+            resolve: album => album.id 
         },
         artists: {
-            type: [Artist],
-            description: 'Artist(s) on album'
+            type: new GraphQLList(Artist),
+            description: 'Artist(s) on album',
+            resolve: album => album.artists
         },
         spotifyOpen: {
             type: GraphQLString,
-            description: 'open.spotify.com link'
+            description: 'open.spotify.com link',
+            resolve: album => album.external_urls.spotify
         },
         name: {
             type: GraphQLString,
-            description: 'Name of album'
+            description: 'Name of album',
+            resolve: album => album.name
         },
         uri: {
             type: GraphQLString,
-            description: 'Spotify URI'
+            description: 'Spotify URI',
+            resolve: album => album.uri
         },
         images: {
-            type: [Image],
-            description: 'Album art'
+            type: new GraphQLList(Image),
+            description: 'Album art',
+            resolve: album => album.images
         }
     })
 });

@@ -14,12 +14,15 @@ const Image = new GraphQLObjectType({
     fields: () => ({
         height: {
             type: GraphQLInt,
+            resolve: image => image.height
         },
         width: {
-            type: GraphQLInt
+            type: GraphQLInt,
+            resolve: image => image.width
         },
         url: {
-            type: GraphQLString
+            type: GraphQLString,
+            resolve: image => image.url
         }
     })
 });
