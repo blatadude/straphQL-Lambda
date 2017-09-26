@@ -5,7 +5,8 @@ const {
 	GraphQLObjectType,
 	GraphQLString,
 	GraphQLID,
-	GraphQLInt,
+    GraphQLInt,
+    GraphQLFloat
 } = GraphQL;
 
 const Features = new GraphQLObjectType({
@@ -13,52 +14,68 @@ const Features = new GraphQLObjectType({
     description: 'EchoNest Analysis',
     fields: () => ({
         danceability: {
-            type: GraphQLInt
-        },
+            type: GraphQLFloat,
+            resolve: features => features.danceability
+        },        
         energy: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.energy
         },
         key: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.key
         },
         loudness: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.loudness
         },
         mode: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.mode
         },
         speechiness: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.speechiness
         },
         acousticness: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.acousticness
         },
         instrumentalness: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.instrumentalness
         },
         liveness: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.liveness
         },
         valence: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.valence
         },
         tempo: {
-            type: GraphQLInt
+            type: GraphQLFloat,
+            resolve: features => features.tempo
         },
         uri: {
-            type: GraphQLString
+            type: GraphQLString,
+            resolve: features => features.uri
         },
         track_href: {
-            type: GraphQLString
+            type: GraphQLString,
+            resolve: features => features.track_href
         },
         analysis_url: {
-            type: GraphQLString
+            type: GraphQLString,
+            resolve: features => features.analysis_url
         },
         duration_ms: {
-            type: GraphQLInt
+            type: GraphQLInt,
+            resolve: features => features.duration_ms
         },
         time_signature: {
-            type: GraphQLInt
+            type: GraphQLInt,
+            resolve: features => features.time_signature
         },
     })
 });

@@ -4,8 +4,9 @@ const GraphQL = require('graphql');
 const Artist = require('./Artist');
 const Album = require('./Album');
 const Features = require('./Features');
-const dotenv = require('dotenv').config()
-const spotifyWebApi = require('spotify-web-api-node')
+const oauth2 = require('client-oauth2');
+const dotenv = require('dotenv').config('../.env');
+const spotifyWebApi = require('spotify-web-api-node');
 const {
     GraphQLSchema,
 	GraphQLObjectType,
@@ -19,12 +20,13 @@ const spotifyApi = new spotifyWebApi({
     clientId: process.env.spotify_client_id,
     clientSecret: process.env.spotify_client_secret
 })
-function authenticate(credentials) {
-    spotifyApi.clientCredentialsGrant().then(cred => {
-        spotifyApi.setAccessToken(cred.body.access_token);
-    })
-};
-authenticate()
+
+const spotify = new oauth2({
+    clientId: process.env.spotify_client_id,
+    clientSecret: process.env.spotify_client_secret,
+    accessTokenUri: 'https://accounts.spotify.com/api/token'
+})
+
 const Track = new GraphQL.GraphQLObjectType({
     name: 'Track',
     description: 'spotify track for straph',
@@ -83,21 +85,41 @@ module.exports = new GraphQLSchema({
             track: {
                 type: new GraphQLList(Track),
                 args: {
-                    id: { type: GraphQLString },
                     name: { type: GraphQLString },
-                    artist: { type: GraphQLString }
+                    artist: { type: GraphQLString },
+                    limit: {type: GraphQLInt },
                 },
-                resolve: (root, args) => {
-                    const tracks = spotifyApi.searchTracks(args.artist && args.name, {limit: 25})
+                resolve: async (root, args) => {
+                    // Authenticate
+                    try {
+                        const token = await spotify.credentials.getToken()
+                        await spotifyApi.setAccessToken(token.data.access_token)
+                    } catch (err) {
+                        console.log(err)
+                    }
+                    // Search
+                    const searchArray = spotifyApi.searchTracks(args.name || args.artist, {limit: args.limit || 20})
                     .then(tracks => tracks.body.tracks.items)
-                    .then(tracks => {
-                        const idArray = tracks.map(track => track.id)
-                        const features = spotifyApi.getAudioFeaturesForTracks(idArray);
-                        return tracks.map(track, i => {
-                            track.features = features[i]
-                            return track
+                    .catch(console.log)
+                        
+                    const idArray = searchArray.then(tracks => {
+                            return tracks.map(track => track.id)
+                    })
+                    const features = idArray.then(ids => {
+                        return spotifyApi.getAudioFeaturesForTracks(ids)
+                        .then(features => features.body.audio_features)
+                        .catch(console.log)
+                    })
+                    
+                    const mixture = features.then(features => {
+                        return searchArray.then(tracks => {
+                            return tracks.map((track, i) => {
+                                track.features = features[i]
+                                return track
+                            })
                         })
                     })
+                    return mixture.then(track => track).catch(console.log)              
                 }
             }
         })
